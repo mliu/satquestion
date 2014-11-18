@@ -37,7 +37,7 @@ span {
 }
 
 input {
-  margin-left: 4px;
+  margin-left: 4px !important;
   zoom: 2;
 }
 
