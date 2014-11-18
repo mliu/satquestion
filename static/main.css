@@ -37,11 +37,19 @@ span {
 }
 
 input {
-  margin-left: 4px;
+  margin-left: 4px !important;
   zoom: 2;
 }
 
 .subscribe {
   margin-top: 40px;
   text-align: center;
+}
+
+.sendgrid-subscription-widget label>span {
+  display: inline-block !important;
+}
+
+.sendgrid-subscription-widget label {
+  display: inline-block !important;
 }
