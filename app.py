@@ -15,7 +15,7 @@ def index():
 sg = sendgrid.SendGridClient('michaelyliu', 'mliu95')
 
 x = datetime.today()
-y = (x+timedelta(days=1)).replace(hour=4, minute=0, second=0)
+y = (x+timedelta(days=0)).replace(hour=9, minute=51, second=0)
 delta_t = y-x
 secs = delta_t.seconds+1
 
