@@ -27,6 +27,14 @@ def grab_snippet(choice, page):
   index2 = page[index1:].index('</label>') + index1
   return page[index1:index2]
 
+def findAll(string, substring):
+  listindex = []
+  i = string.find(substring)
+  while i >= 0:
+    listindex.append(i)
+    i = string.find(substring, i + 1)
+  return listindex
+
 def build_question():
   mlist = []
   emails = requests.get("https://sendgrid.com/api/newsletter/lists/email/get.json?api_user=michaelyliu&api_key=mliu95&list=SATList")
@@ -36,9 +44,12 @@ def build_question():
   string = response.decode('utf-8') 
   index1 = string.index('<div class="questionStem">')
   index2 = string.index('<fieldset id="qotdChoicesFields"')
+  questionString = string[index1:index2]
+  for i in reversed(findAll(questionString, "/SAT/public/image")):
+    questionString = questionString[:i] + "http://sat.collegeboard.org/" + questionString[i:]
   f = open('email.html', 'r')
   template = f.read()
-  template = template.format(day=datetime.today().strftime("%m-%d-%Y"), question=string[index1:index2], urlA=build_url("A"), snippetA=grab_snippet("A", string), urlB=build_url("B"), snippetB=grab_snippet("B", string), urlC=build_url("C"), snippetC=grab_snippet("C", string), urlD=build_url("D"), snippetD=grab_snippet("D", string), urlE=build_url("E"), snippetE=grab_snippet("E", string))
+  template = template.format(day=datetime.today().strftime("%m-%d-%Y"), question=questionString, urlA=build_url("A"), snippetA=grab_snippet("A", string), urlB=build_url("B"), snippetB=grab_snippet("B", string), urlC=build_url("C"), snippetC=grab_snippet("C", string), urlD=build_url("D"), snippetD=grab_snippet("D", string), urlE=build_url("E"), snippetE=grab_snippet("E", string))
   print("Built question for " + str(datetime.today()))
   message = sendgrid.Mail()
   message.set_subject('The SAT Question of the Day')
