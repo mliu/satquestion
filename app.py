@@ -66,8 +66,7 @@ def build_question():
   t.start()
   print("Timer started for " + str(y))
 
-t = Timer(secs, build_question)
-t.start()
+build_question()
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0', port=8080)
